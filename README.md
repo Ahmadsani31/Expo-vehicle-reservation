@@ -1,73 +1,71 @@
-# Welcome to your Lovable project
+# 🚗 Vehicle Reservation App
 
-## Project info
+A **smart vehicle reservation app** built with **React Native + Expo**.  
+Users can easily **reserve vehicles** by **scanning a QR code** attached to each vehicle, and **track usage locations** using **real-time GPS logging**.  
+Designed for efficient fleet management and seamless vehicle operations.
 
-**URL**: https://lovable.dev/projects/7ca517d3-0acc-430f-a84d-835140595da9
+---
 
-## How can I edit this code?
+## ✨ Features
 
-There are several ways of editing your application.
+- 📷 **QR Code Scanning**:  
+  Instantly scan a vehicle's QR code to start a reservation.
 
-**Use Lovable**
+- 📍 **GPS Location Tracking**:  
+  Automatically log the vehicle's location during the usage period.
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/7ca517d3-0acc-430f-a84d-835140595da9) and start prompting.
+- 📅 **Reservation System**:  
+  Book and manage vehicle reservations quickly and securely.
 
-Changes made via Lovable will be committed automatically to this repo.
+- 🔒 **Secure Authentication**:  
+  Ensure that only authorized users can reserve and operate vehicles.
 
-**Use your preferred IDE**
+- 🔔 **Real-Time Notifications**:  
+  Get alerts for reservation status, usage time limits, and location updates.
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+---
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+## 🚀 Tech Stack
 
-Follow these steps:
+- **React Native** (with TypeScript)
+- **Expo** (for QR scanning, camera access, and location services)
+- **Expo Camera** — QR Code scanning
+- **Expo Location** — GPS tracking
+- **React Context API** (for state management)
+- **React Navigation** — App routing
+- **Expo Router** — (optional) file-based navigation
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+---
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+## 📷 QR Code Reservation Flow
 
-# Step 3: Install the necessary dependencies.
-npm i
+1. Open the app and tap **"Scan Vehicle QR"**.
+2. Scan the QR code attached to the vehicle.
+3. Automatically fetch the vehicle info.
+4. Confirm and **start reservation**.
+5. GPS tracking will log your location during the usage.
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
-```
+---
 
-**Edit a file directly in GitHub**
+## 📍 GPS Location Logging
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+- Location is captured automatically during reservation period.
+- Stored securely for historical usage records and tracking.
+- Useful for monitoring fleet usage and route optimization.
 
-**Use GitHub Codespaces**
+---
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+## ⚙️ Installation
 
-## What technologies are used for this project?
+```bash
+# Clone the repository
+git clone https://github.com/Ahmadsani31/expo-vehicle-reservasi.git
 
-This project is built with:
+# Navigate into the project directory
+cd vehicle-reservation-app
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+# Install dependencies
+npm install
 
-## How can I deploy this project?
-
-Simply open [Lovable](https://lovable.dev/projects/7ca517d3-0acc-430f-a84d-835140595da9) and click on Share -> Publish.
-
-## Can I connect a custom domain to my Lovable project?
-
-Yes it is!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+# Start the Expo development server
+npm start
