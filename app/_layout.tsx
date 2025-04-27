@@ -1,24 +1,23 @@
 import FontAwesome from '@expo/vector-icons/FontAwesome';
-import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
+import {
+  SafeAreaProvider,
+
+} from 'react-native-safe-area-context';
 import { useFonts } from 'expo-font';
-import { Stack } from 'expo-router';
+import { Slot, Stack, useRouter } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import { useEffect } from 'react';
 import 'react-native-reanimated';
-
+import "./../global.css"
 import { useColorScheme } from '@/components/useColorScheme';
+import { StatusBar } from 'expo-status-bar';
+import { Alert, BackHandler, Platform } from 'react-native';
+import { AuthProvider, useAuth } from '@/context/authContext';
 
-export {
-  // Catch any errors thrown by the Layout component.
-  ErrorBoundary,
-} from 'expo-router';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
-export const unstable_settings = {
-  // Ensure that reloading on `/modal` keeps a back button present.
-  initialRouteName: '(tabs)',
-};
 
-// Prevent the splash screen from auto-hiding before asset loading is complete.
+
 SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
@@ -27,7 +26,43 @@ export default function RootLayout() {
     ...FontAwesome.font,
   });
 
-  // Expo Router uses Error Boundaries to catch errors in the navigation tree.
+  const router = useRouter();
+
+  useEffect(() => {
+    const backAction = () => {
+      if (router.canGoBack()) {
+        // Kalau masih bisa mundur (ada history), cukup back saja
+        router.back();
+      } else {
+        // Kalau tidak bisa mundur (sudah di root), tampilkan alert keluar
+        Alert.alert(
+          'Konfirmasi Keluar',
+          'Apakah Anda yakin ingin keluar dari aplikasi?',
+          [
+            {
+              text: 'Tidak',
+              onPress: () => null,
+              style: 'cancel',
+            },
+            {
+              text: 'Ya',
+              onPress: () => BackHandler.exitApp(),
+            },
+          ]
+        );
+      }
+
+      return true; // <- Wajib! Supaya sistem back tidak langsung nutup
+    };
+
+    const backHandler = BackHandler.addEventListener(
+      'hardwareBackPress',
+      backAction
+    );
+
+    return () => backHandler.remove();
+  }, [router]);
+
   useEffect(() => {
     if (error) throw error;
   }, [error]);
@@ -42,18 +77,27 @@ export default function RootLayout() {
     return null;
   }
 
-  return <RootLayoutNav />;
+  return (
+    <SafeAreaProvider>
+      <GestureHandlerRootView style={{ flex: 1 }}>
+        <AuthProvider>
+          <StatusBar style={Platform.OS === 'ios' ? 'light' : 'dark'} />
+          <MainLayout />
+        </AuthProvider>
+      </GestureHandlerRootView>
+    </SafeAreaProvider>
+  );
 }
 
-function RootLayoutNav() {
-  const colorScheme = useColorScheme();
-
+function MainLayout() {
   return (
-    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="modal" options={{ presentation: 'modal' }} />
-      </Stack>
-    </ThemeProvider>
+    <Stack screenOptions={{ headerShown: false }}>
+      <Stack.Screen name="(auth)/login" options={{
+        headerShown: false,
+      }}/>
+      <Stack.Screen name="(protected)" options={{
+        headerShown: false,
+      }} />
+    </Stack>
   );
 }
